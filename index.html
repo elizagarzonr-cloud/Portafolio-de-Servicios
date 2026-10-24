@@ -1,198 +1,162 @@
-:root {
-    --bg: #fcfcfd;
-    --surface: #ffffff;
-    --ink: #15171c;
-    --muted: #666b76;
-    --line: #e8e9ed;
-    --hover: #f2f3f6;
-    --accent: #2b59ff;
-    --ok: #1f9d55;
-    --shadow-btn: 0 0 0 1px rgba(21, 23, 28, .08), 0 1px 2px rgba(21, 23, 28, .06);
-    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Consultoría en SG-SST con ciencia de datos: diagnóstico, automatización y tableros Power BI para empresas en Colombia.">
+    <title>Cristina Garzón | Seguridad y salud en el trabajo con datos</title>
+    <meta property="og:title" content="Cristina Garzón | SST con ciencia de datos">
+    <meta property="og:description" content="No gestiono papeles. Predigo riesgos.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2312151a'/%3E%3Ctext x='16' y='21.5' font-family='system-ui,sans-serif' font-size='14' font-weight='600' fill='white' text-anchor='middle'%3ECG%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+    <div class="wrap">
+        <a class="brand" href="#top">Cristina Elizabeth Garzón R.</a>
+        <nav class="nav-links" aria-label="Principal">
+            <a class="hide-sm" href="#calculadora">Diagnóstico</a>
+            <a class="hide-sm" href="#metodo">Método</a>
+            <a class="hide-sm" href="#servicios">Servicios</a>
+            <a class="btn btn-primary btn-sm" href="#contacto">Agendar auditoría</a>
+        </nav>
+    </div>
+</header>
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #0e0f12;
-        --surface: #17181c;
-        --ink: #f1f2f4;
-        --muted: #9a9fa9;
-        --line: #26282e;
-        --hover: #1a1c21;
-        --accent: #7b97ff;
-        --ok: #4ade80;
-        --shadow-btn: 0 0 0 1px rgba(255, 255, 255, .08);
-    }
-}
+<main id="top">
+    <section class="hero wrap">
+        <h1 class="reveal" style="--i:0">No gestiono papeles. Predigo riesgos.</h1>
+        <p class="lead reveal" style="--i:1">La primera consultoría en Colombia que fusiona normativa legal con ciencia de datos para blindar su empresa financiera y operativamente.</p>
+        <div class="actions reveal" style="--i:2">
+            <a class="btn btn-primary" href="#contacto">Agendar auditoría</a>
+            <a class="btn btn-ghost" href="#calculadora">Calcular mi riesgo</a>
+        </div>
+        <dl class="stats reveal" style="--i:3">
+            <div><dt>15%</dt><dd>Reducción de incidentes</dd></div>
+            <div><dt>95%</dt><dd>Efectividad ARL</dd></div>
+            <div><dt>100%</dt><dd>Control de datos</dd></div>
+        </dl>
+    </section>
 
-*, *::before, *::after { box-sizing: border-box; }
+    <section id="calculadora" class="sec wrap calc">
+        <div>
+            <h2>¿Cuánto le cuesta a su empresa no tenerme?</h2>
+            <p class="muted">El incumplimiento del SG-SST puede traer sanciones importantes. Con esta calculadora estime su exposición según el tamaño de su empresa y su nivel de riesgo (Decreto 1072 / Res. 0312).</p>
+        </div>
+        <div class="tool">
+            <label class="field" for="employees">Número de empleados</label>
+            <input id="employees" type="number" inputmode="numeric" min="1" placeholder="Ej: 50" autocomplete="off">
 
-html { -webkit-text-size-adjust: 100%; }
+            <span class="field" id="risk-label">Nivel de riesgo</span>
+            <div class="seg" role="radiogroup" aria-labelledby="risk-label">
+                <label><input type="radio" name="risk" value="1" data-name="I · Bajo" checked><span>I</span></label>
+                <label><input type="radio" name="risk" value="2" data-name="II · Medio"><span>II</span></label>
+                <label><input type="radio" name="risk" value="3" data-name="III · Alto"><span>III</span></label>
+                <label><input type="radio" name="risk" value="4" data-name="IV · Muy alto"><span>IV</span></label>
+                <label><input type="radio" name="risk" value="5" data-name="V · Máximo"><span>V</span></label>
+            </div>
+            <p class="hint" id="risk-name">Riesgo I · Bajo</p>
 
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
+            <div class="result" aria-live="polite">
+                <p class="muted">Multa potencial estimada</p>
+                <p class="amount" id="fine">—</p>
+                <p class="fine-print" id="fine-note">Ingrese el número de empleados para ver la estimación.</p>
+                <a class="link" id="fine-cta" href="#contacto" hidden>Quiero blindar mi empresa</a>
+            </div>
+        </div>
+    </section>
 
-a { color: inherit; text-decoration: none; }
+    <section id="metodo" class="sec wrap">
+        <h2>Data-driven safety, en tres pasos</h2>
+        <ol class="steps">
+            <li><span class="n">1</span><h3>Diagnóstico profundo</h3><p class="muted">No uso checklists genéricos. Analizo sus datos históricos (incidentes, ausentismo) para descubrir las causas raíz reales de sus riesgos.</p></li>
+            <li><span class="n">2</span><h3>Automatización preventiva</h3><p class="muted">Elimino la ceguera operativa. Cruzo automáticamente nómina y seguridad social para exponer inconsistencias peligrosas que su equipo no ve.</p></li>
+            <li><span class="n">3</span><h3>Blindaje corporativo</h3><p class="muted">Entrego tableros Power BI en tiempo real para la gerencia. Usted toma las decisiones estratégicas; yo aseguro el cumplimiento normativo.</p></li>
+        </ol>
+    </section>
 
-svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    <section id="servicios" class="sec wrap">
+        <h2>Servicios</h2>
+        <p class="muted intro">Fusiono la obligatoriedad normativa con la inteligencia de negocios. Elija la solución que su empresa necesita hoy.</p>
+        <div class="acc" id="acc">
+            <article class="svc open">
+                <button class="svc-head" aria-expanded="true" aria-controls="p1" id="h1">
+                    <span class="svc-title">Sistema de Gestión con Propósito</span><span class="tag">Obligatorio por ley</span><i class="chev" aria-hidden="true"></i>
+                </button>
+                <div class="panel" id="p1" role="region" aria-labelledby="h1"><div>
+                    <p class="muted">Un SG-SST que va más allá del papel para convertirse en herramienta de prevención de pérdidas.</p>
+                    <ul>
+                        <li><strong>SST con inteligencia:</strong> nace digital y predictivo.</li>
+                        <li><strong>Priorización de riesgos:</strong> inversión inteligente.</li>
+                        <li><strong>Emergencias reales:</strong> planes ejecutables bajo presión.</li>
+                        <li><strong>Tranquilidad ante auditorías:</strong> siempre listo para ARL y MinTrabajo.</li>
+                    </ul>
+                </div></div>
+            </article>
+            <article class="svc">
+                <button class="svc-head" aria-expanded="false" aria-controls="p2" id="h2">
+                    <span class="svc-title">SST Intelligence &amp; Analytics</span><span class="tag">Alta tecnología</span><i class="chev" aria-hidden="true"></i>
+                </button>
+                <div class="panel" id="p2" role="region" aria-labelledby="h2"><div>
+                    <p class="muted">De los datos a la acción. Visualice el estado de su seguridad en tiempo real y anticípese a los riesgos.</p>
+                    <ul>
+                        <li><strong>Tableros Power BI:</strong> monitoreo del pulso de seguridad.</li>
+                        <li><strong>Scripts Python:</strong> integración de nómina y reportes.</li>
+                        <li><strong>Indicadores predictivos:</strong> alertas de impacto financiero.</li>
+                        <li><strong>Estrategia con IA:</strong> decisiones respaldadas por inteligencia artificial.</li>
+                    </ul>
+                </div></div>
+            </article>
+            <article class="svc">
+                <button class="svc-head" aria-expanded="false" aria-controls="p3" id="h3">
+                    <span class="svc-title">Inteligencia Operativa &amp; Compensaciones</span><span class="tag">Eficiencia operativa</span><i class="chev" aria-hidden="true"></i>
+                </button>
+                <div class="panel" id="p3" role="region" aria-labelledby="h3"><div>
+                    <p class="muted">Tecnología y precisión para la gestión financiera de su equipo humano.</p>
+                    <ul>
+                        <li><strong>Cumplimiento 360°:</strong> defensa sólida ante auditorías.</li>
+                        <li><strong>Onboarding digital:</strong> contratación ágil sin papeleo.</li>
+                        <li><strong>Archivo vivo en la nube:</strong> documentos indexados y seguros.</li>
+                        <li><strong>Radar financiero:</strong> cruce de datos para ahorro en nómina.</li>
+                    </ul>
+                </div></div>
+            </article>
+            <article class="svc">
+                <button class="svc-head" aria-expanded="false" aria-controls="p4" id="h4">
+                    <span class="svc-title">Transformación Cultural en Seguridad</span><span class="tag">Transformación</span><i class="chev" aria-hidden="true"></i>
+                </button>
+                <div class="panel" id="p4" role="region" aria-labelledby="h4"><div>
+                    <p class="muted">Creamos equipos que se cuidan a sí mismos. La mejor protección nace desde adentro.</p>
+                    <ul>
+                        <li><strong>Entrenamientos memorables:</strong> gamificación 100% práctica.</li>
+                        <li><strong>Capital humano:</strong> prevención de burnout y fatiga.</li>
+                        <li><strong>Cuidado colectivo:</strong> influencia positiva entre pares.</li>
+                        <li><strong>Medición real:</strong> métricas de cambio de comportamiento.</li>
+                    </ul>
+                </div></div>
+            </article>
+        </div>
+    </section>
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+    <section class="sec wrap">
+        <blockquote class="quote">No le ofrecemos otro reporte más. Le entregamos el sistema nervioso digital de su seguridad, capaz de ver lo invisible y anticiparse a lo inevitable.</blockquote>
+    </section>
+</main>
 
-.page {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: calc(40px + env(safe-area-inset-top, 0px)) 24px calc(48px + env(safe-area-inset-bottom, 0px));
-}
-
-/* Barra superior */
-.top { display: flex; align-items: center; gap: 10px; font-size: 14px; }
-.mark {
-    display: grid; place-items: center;
-    width: 28px; height: 28px; border-radius: 8px;
-    background: var(--ink); color: var(--bg);
-    font-size: 11px; font-weight: 600; letter-spacing: .02em;
-}
-.name { font-weight: 500; }
-.status { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
-.dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
-.dot::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%;
-    background: var(--ok); opacity: .5;
-    animation: ping 2.4s var(--ease-out) infinite;
-}
-@keyframes ping { 0% { transform: scale(1); opacity: .5; } 70%, 100% { transform: scale(3); opacity: 0; } }
-
-/* Hero */
-.hero { padding: clamp(72px, 14vh, 128px) 0 clamp(56px, 10vh, 88px); }
-h1 {
-    margin: 0;
-    max-width: 14ch;
-    font-size: clamp(2.5rem, 7vw, 3.75rem);
-    line-height: 1.04;
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    text-wrap: balance;
-}
-.lead { margin: 20px 0 0; max-width: 44ch; font-size: 1.125rem; color: var(--muted); text-wrap: pretty; }
-
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
-
-.btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    height: 40px; padding: 0 16px;
-    border: 0; border-radius: 10px;
-    font: inherit; font-size: 14px; font-weight: 500; line-height: 1;
-    cursor: pointer;
-    transition: transform 160ms var(--ease-out), background-color 160ms ease, box-shadow 160ms ease;
-}
-.btn:active { transform: scale(0.97); }
-.btn-primary { background: var(--ink); color: var(--bg); box-shadow: 0 1px 2px rgba(21, 23, 28, .2), inset 0 1px 0 rgba(255, 255, 255, .12); }
-.btn-ghost { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-btn); }
-
-@media (hover: hover) and (pointer: fine) {
-    .btn-primary:hover { background: color-mix(in srgb, var(--ink) 86%, var(--bg)); }
-    .btn-ghost:hover { background: var(--hover); }
-}
-
-/* Cambio de icono al copiar */
-.icon-swap { position: relative; width: 16px; height: 16px; }
-.icon-swap svg {
-    position: absolute; inset: 0; width: 16px; height: 16px;
-    transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out), filter 180ms var(--ease-out);
-}
-.i-check { opacity: 0; transform: scale(.25); filter: blur(4px); color: var(--ok); }
-.is-done .i-copy { opacity: 0; transform: scale(.25); filter: blur(4px); }
-.is-done .i-check { opacity: 1; transform: none; filter: none; }
-
-/* Servicios */
-.services h2 { margin: 0 0 12px; padding: 0 12px; font-size: 14px; font-weight: 500; color: var(--muted); }
-
-.list { position: relative; display: flex; flex-direction: column; }
-
-.hover-bg {
-    position: absolute; top: 0; left: 0; right: 0;
-    border-radius: 14px; background: var(--hover);
-    opacity: 0; pointer-events: none;
-    transition: transform 240ms var(--ease-out), height 240ms var(--ease-out), opacity 150ms var(--ease-out);
-}
-
-.row {
-    position: relative; z-index: 1;
-    display: flex; align-items: center; gap: 16px;
-    padding: 16px 12px;
-    border-radius: 14px;
-}
-.row + .row::before {
-    content: ""; position: absolute; top: 0; left: 12px; right: 12px;
-    height: 1px; background: var(--line);
-    transition: opacity 150ms ease;
-}
-.row:hover::before, .row:hover + .row::before,
-.row:focus-visible::before, .row:focus-visible + .row::before { opacity: 0; }
-.row:focus-visible { outline-offset: -2px; }
-
-.tile {
-    flex: none; display: grid; place-items: center;
-    width: 40px; height: 40px; border-radius: 11px;
-    background: var(--surface); color: var(--ink);
-    box-shadow: var(--shadow-btn);
-}
-.tile svg { width: 19px; height: 19px; }
-
-.text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.text strong { font-size: 15px; font-weight: 500; letter-spacing: -0.005em; }
-.text span { font-size: 14px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
-
-.go {
-    flex: none; width: 18px; height: 18px; margin-left: auto; color: var(--muted);
-    opacity: 0; transform: translate(-4px, 4px);
-    transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-    .row:hover .go { opacity: 1; transform: none; }
-}
-.row:focus-visible .go { opacity: 1; transform: none; }
-
-/* Pie */
-.foot {
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px;
-    margin-top: clamp(64px, 12vh, 112px); padding: 20px 12px 0;
-    border-top: 1px solid var(--line);
-    font-size: 14px; color: var(--muted);
-}
-.foot a { transition: color 150ms ease; }
-@media (hover: hover) and (pointer: fine) { .foot a:hover { color: var(--ink); } }
-
-/* Entrada: un solo momento al cargar */
-.reveal {
-    opacity: 0;
-    animation: rise 640ms var(--ease-out) forwards;
-    animation-delay: calc(var(--i, 0) * 70ms);
-}
-@keyframes rise {
-    from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
-    to   { opacity: 1; transform: none; filter: none; }
-}
-
-@media (max-width: 480px) {
-    .page { padding-left: 16px; padding-right: 16px; }
-    .status { font-size: 13px; }
-    .btn { flex: 1 1 auto; }
-    .go { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .reveal { animation: none; opacity: 1; }
-    .dot::after { animation: none; opacity: 0; }
-    .hover-bg, .go, .icon-swap svg, .btn { transition-duration: 1ms; }
-    .btn:active { transform: none; }
-}
+<footer id="contacto" class="foot">
+    <div class="wrap">
+        <h2>Deje de jugar a la ruleta rusa con su seguridad.</h2>
+        <p class="muted">Soy Cristina Elizabeth Garzón: administradora, especialista en SST y analista de datos.</p>
+        <div class="actions">
+            <a class="btn btn-primary" href="https://wa.me/573238134650" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+            <a class="btn btn-ghost" href="mailto:elizagarzonr@gmail.com">Enviar caso por correo</a>
+        </div>
+        <p class="copy">© 2025 Cristina Elizabeth Garzón R. · Ingeniería de datos aplicada a SST</p>
+    </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
