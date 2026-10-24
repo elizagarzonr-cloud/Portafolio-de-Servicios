@@ -1,43 +1,198 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliza Garzón | Portafolio Inteligente</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body>
-    <div class="container">
-        <header class="hero">
-            <span class="badge">Nuevo Portafolio 2026</span>
-            <h1>Diseño <span class="text-blue">Inteligente</span></h1>
-            <p class="subtitle">Soluciones digitales de alto rendimiento y estética minimalista.</p>
-            <div class="actions">
-                <a href="mailto:tuemail@ejemplo.com" class="btn btn-primary">Contacto Directo</a>
-            </div>
-        </header>
+:root {
+    --bg: #fcfcfd;
+    --surface: #ffffff;
+    --ink: #15171c;
+    --muted: #666b76;
+    --line: #e8e9ed;
+    --hover: #f2f3f6;
+    --accent: #2b59ff;
+    --ok: #1f9d55;
+    --shadow-btn: 0 0 0 1px rgba(21, 23, 28, .08), 0 1px 2px rgba(21, 23, 28, .06);
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-        <section class="grid">
-            <div class="card">
-                <i data-lucide="layout"></i>
-                <h3>Frontend Pro</h3>
-                <p>Interfaces rápidas, accesibles y optimizadas para cualquier dispositivo.</p>
-            </div>
-            <div class="card">
-                <i data-lucide="cloud"></i>
-                <h3>Cloud Services</h3>
-                <p>Despliegue y gestión de aplicaciones en entornos de nube modernos.</p>
-            </div>
-            <div class="card">
-                <i data-lucide="zap"></i>
-                <h3>Automatización</h3>
-                <p>Optimización de procesos mediante scripts y herramientas inteligentes.</p>
-            </div>
-        </section>
-    </div>
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0e0f12;
+        --surface: #17181c;
+        --ink: #f1f2f4;
+        --muted: #9a9fa9;
+        --line: #26282e;
+        --hover: #1a1c21;
+        --accent: #7b97ff;
+        --ok: #4ade80;
+        --shadow-btn: 0 0 0 1px rgba(255, 255, 255, .08);
+    }
+}
 
-    <script>lucide.createIcons();</script>
-</body>
-</html>
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+
+svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+
+.page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: calc(40px + env(safe-area-inset-top, 0px)) 24px calc(48px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Barra superior */
+.top { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.mark {
+    display: grid; place-items: center;
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--ink); color: var(--bg);
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
+}
+.name { font-weight: 500; }
+.status { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+.dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+.dot::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: var(--ok); opacity: .5;
+    animation: ping 2.4s var(--ease-out) infinite;
+}
+@keyframes ping { 0% { transform: scale(1); opacity: .5; } 70%, 100% { transform: scale(3); opacity: 0; } }
+
+/* Hero */
+.hero { padding: clamp(72px, 14vh, 128px) 0 clamp(56px, 10vh, 88px); }
+h1 {
+    margin: 0;
+    max-width: 14ch;
+    font-size: clamp(2.5rem, 7vw, 3.75rem);
+    line-height: 1.04;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+}
+.lead { margin: 20px 0 0; max-width: 44ch; font-size: 1.125rem; color: var(--muted); text-wrap: pretty; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 40px; padding: 0 16px;
+    border: 0; border-radius: 10px;
+    font: inherit; font-size: 14px; font-weight: 500; line-height: 1;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-out), background-color 160ms ease, box-shadow 160ms ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--ink); color: var(--bg); box-shadow: 0 1px 2px rgba(21, 23, 28, .2), inset 0 1px 0 rgba(255, 255, 255, .12); }
+.btn-ghost { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-btn); }
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover { background: color-mix(in srgb, var(--ink) 86%, var(--bg)); }
+    .btn-ghost:hover { background: var(--hover); }
+}
+
+/* Cambio de icono al copiar */
+.icon-swap { position: relative; width: 16px; height: 16px; }
+.icon-swap svg {
+    position: absolute; inset: 0; width: 16px; height: 16px;
+    transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out), filter 180ms var(--ease-out);
+}
+.i-check { opacity: 0; transform: scale(.25); filter: blur(4px); color: var(--ok); }
+.is-done .i-copy { opacity: 0; transform: scale(.25); filter: blur(4px); }
+.is-done .i-check { opacity: 1; transform: none; filter: none; }
+
+/* Servicios */
+.services h2 { margin: 0 0 12px; padding: 0 12px; font-size: 14px; font-weight: 500; color: var(--muted); }
+
+.list { position: relative; display: flex; flex-direction: column; }
+
+.hover-bg {
+    position: absolute; top: 0; left: 0; right: 0;
+    border-radius: 14px; background: var(--hover);
+    opacity: 0; pointer-events: none;
+    transition: transform 240ms var(--ease-out), height 240ms var(--ease-out), opacity 150ms var(--ease-out);
+}
+
+.row {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 12px;
+    border-radius: 14px;
+}
+.row + .row::before {
+    content: ""; position: absolute; top: 0; left: 12px; right: 12px;
+    height: 1px; background: var(--line);
+    transition: opacity 150ms ease;
+}
+.row:hover::before, .row:hover + .row::before,
+.row:focus-visible::before, .row:focus-visible + .row::before { opacity: 0; }
+.row:focus-visible { outline-offset: -2px; }
+
+.tile {
+    flex: none; display: grid; place-items: center;
+    width: 40px; height: 40px; border-radius: 11px;
+    background: var(--surface); color: var(--ink);
+    box-shadow: var(--shadow-btn);
+}
+.tile svg { width: 19px; height: 19px; }
+
+.text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.text strong { font-size: 15px; font-weight: 500; letter-spacing: -0.005em; }
+.text span { font-size: 14px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+
+.go {
+    flex: none; width: 18px; height: 18px; margin-left: auto; color: var(--muted);
+    opacity: 0; transform: translate(-4px, 4px);
+    transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+    .row:hover .go { opacity: 1; transform: none; }
+}
+.row:focus-visible .go { opacity: 1; transform: none; }
+
+/* Pie */
+.foot {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px;
+    margin-top: clamp(64px, 12vh, 112px); padding: 20px 12px 0;
+    border-top: 1px solid var(--line);
+    font-size: 14px; color: var(--muted);
+}
+.foot a { transition: color 150ms ease; }
+@media (hover: hover) and (pointer: fine) { .foot a:hover { color: var(--ink); } }
+
+/* Entrada: un solo momento al cargar */
+.reveal {
+    opacity: 0;
+    animation: rise 640ms var(--ease-out) forwards;
+    animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes rise {
+    from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+    to   { opacity: 1; transform: none; filter: none; }
+}
+
+@media (max-width: 480px) {
+    .page { padding-left: 16px; padding-right: 16px; }
+    .status { font-size: 13px; }
+    .btn { flex: 1 1 auto; }
+    .go { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal { animation: none; opacity: 1; }
+    .dot::after { animation: none; opacity: 0; }
+    .hover-bg, .go, .icon-swap svg, .btn { transition-duration: 1ms; }
+    .btn:active { transform: none; }
+}
