@@ -1,0 +1,65 @@
+(function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Calculadora: se actualiza al escribir, sin botón ni alert() */
+    var emp = document.getElementById('employees');
+    var fine = document.getElementById('fine');
+    var note = document.getElementById('fine-note');
+    var cta = document.getElementById('fine-cta');
+    var riskName = document.getElementById('risk-name');
+    var radios = document.querySelectorAll('input[name="risk"]');
+    var fmt = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+    var shown = 0, raf;
+
+    function estimate(n, r) {
+        var base = n <= 10 ? 5000000 : n <= 50 ? 15000000 : 40000000;
+        return base * r;
+    }
+
+    function tween(to) {
+        cancelAnimationFrame(raf);
+        if (reduce) { shown = to; fine.textContent = fmt.format(to); return; }
+        var from = shown, t0 = performance.now(), dur = 420;
+        (function step(t) {
+            var p = Math.min((t - t0) / dur, 1);
+            var e = 1 - Math.pow(1 - p, 3);
+            shown = from + (to - from) * e;
+            fine.textContent = fmt.format(Math.round(shown));
+            if (p < 1) raf = requestAnimationFrame(step);
+        })(t0);
+    }
+
+    function update() {
+        var n = parseInt(emp.value, 10);
+        var sel = document.querySelector('input[name="risk"]:checked');
+        riskName.textContent = 'Riesgo ' + sel.dataset.name;
+        if (!n || n < 1) {
+            cancelAnimationFrame(raf); shown = 0;
+            fine.textContent = '—';
+            note.textContent = 'Ingrese el número de empleados para ver la estimación.';
+            cta.hidden = true;
+            return;
+        }
+        tween(estimate(n, +sel.value));
+        note.textContent = 'Estimación orientativa con valores de referencia, no es el cálculo oficial de una sanción. Para un diagnóstico real, agende una auditoría.';
+        cta.hidden = false;
+    }
+    emp.addEventListener('input', update);
+    radios.forEach(function (r) { r.addEventListener('change', update); });
+
+    /* Servicios: un panel abierto a la vez */
+    var items = document.querySelectorAll('.svc');
+    items.forEach(function (item) {
+        item.querySelector('.svc-head').addEventListener('click', function () {
+            var open = item.classList.contains('open');
+            items.forEach(function (o) {
+                o.classList.remove('open');
+                o.querySelector('.svc-head').setAttribute('aria-expanded', 'false');
+            });
+            if (!open) {
+                item.classList.add('open');
+                item.querySelector('.svc-head').setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+})();
